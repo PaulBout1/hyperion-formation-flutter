@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/poke_repository.dart';
-import 'package:pokemon/widgets/home_screen/add_screen.dart';
-import 'package:pokemon/widgets/home_screen/pokemon_detail.dart';
-import 'package:pokemon/widgets/home_screen/pokemon_list.dart';
+import 'package:pokemon/utils/extension/context_extension.dart';
+import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
+import 'package:pokemon/views/screens/pokemons/pokemon_detail.dart';
+import 'package:pokemon/views/screens/pokemons/pokemon_list.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class PokemonsScreen extends StatefulWidget {
+  const PokemonsScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _HomeScreenState();
+  State<StatefulWidget> createState() => _PokemonsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PokemonsScreenState extends State<PokemonsScreen> {
   List<Pokemon>? _pokemons;
   Pokemon? _selectedPokemon;
 
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => _selectedPokemon = pokemon);
   }
 
-  _onDissmissed(Pokemon pokemon) {
+  _onDeletePokemon(Pokemon pokemon) {
     _pokemons?.remove(pokemon);
     if (_selectedPokemon == pokemon) _selectedPokemon = _pokemons?.firstOrNull;
     setState(() {});
@@ -47,9 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _editPokemon([Pokemon? pokemon]) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => AddScreen(
-          initialPokemon: pokemon,
-        ),
+        builder: (_) => PokemonEditScreen(initialPokemon: pokemon),
       ),
     );
     setState(() {});
@@ -61,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: const Icon(Icons.home),
-          title: const Text('Pokemons'),
+          title: Text(context.intl.appName),
           actions: [
             IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
             IconButton(onPressed: () {}, icon: const Icon(Icons.sort)),
@@ -76,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               selectedPokemon: _selectedPokemon,
               onTap: _onTap,
               onRefresh: _fetchData,
-              onDismissed: _onDissmissed,
+              onDelete: _onDeletePokemon,
             ),
           ),
           const VerticalDivider(

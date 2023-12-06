@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/models/pokemon_type.dart';
 import 'package:pokemon/repository/poke_repository.dart';
+import 'package:pokemon/utils/extension/context_extension.dart';
+import 'package:pokemon/views/screens/pokemons_edit/pokemon_type_chip.dart';
 
-class AddScreen extends StatefulWidget {
+class PokemonEditScreen extends StatefulWidget {
   final Pokemon? initialPokemon;
 
-  const AddScreen({this.initialPokemon, super.key});
+  const PokemonEditScreen({this.initialPokemon, super.key});
 
   @override
-  State<StatefulWidget> createState() => _AddScreenState();
+  State<StatefulWidget> createState() => _PokemonEditScreenState();
 }
 
-class _AddScreenState extends State<AddScreen> {
+class _PokemonEditScreenState extends State<PokemonEditScreen> {
   List<PokemonType>? _allPokemonTypes;
   late Pokemon _pokemon;
   late TextEditingController _nameController;
@@ -62,7 +64,7 @@ class _AddScreenState extends State<AddScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Pokemons')),
+        appBar: AppBar(title: Text(context.intl.appName)),
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 500),
@@ -93,7 +95,7 @@ class _AddScreenState extends State<AddScreen> {
                           spacing: 5,
                           children: _allPokemonTypes
                                   ?.map(
-                                    (type) => TypeChip(
+                                    (type) => PokemonTypeChip(
                                       type,
                                       initialValue:
                                           _pokemon.types.contains(type),
@@ -117,47 +119,6 @@ class _AddScreenState extends State<AddScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class TypeChip extends StatefulWidget {
-  final PokemonType _type;
-  final bool initialValue;
-  final Function(bool) onChanged;
-
-  const TypeChip(
-    this._type, {
-    required this.onChanged,
-    this.initialValue = false,
-    super.key,
-  });
-
-  @override
-  State<StatefulWidget> createState() => _TypeChipState();
-}
-
-class _TypeChipState extends State<TypeChip> {
-  bool _isSelected = false;
-
-  _onChange(bool value) {
-    widget.onChanged(value);
-    setState(() => _isSelected = value);
-  }
-
-  @override
-  void initState() {
-    _isSelected = widget.initialValue;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FilterChip(
-      onSelected: _onChange,
-      selected: _isSelected,
-      label: Text(widget._type.name),
-      avatar: Image.network(widget._type.imageUrl),
     );
   }
 }
