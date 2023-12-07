@@ -43,6 +43,9 @@ void main() {
 ///   * go router
 /// snackbar
 /// network image provider
-/// inspector / debugger
+/// devtools,  / debugger
 ///  * https://docs.flutter.dev/tools/devtools/inspector
-///   profile
+///  * memory
+///  * network 
+///  * logging 
+///  * performance (profile)

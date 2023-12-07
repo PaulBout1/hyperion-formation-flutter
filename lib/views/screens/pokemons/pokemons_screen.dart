@@ -48,14 +48,14 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   _editPokemon(BuildContext context, [Pokemon? pokemon]) async {
     // GoRouter.of(context).go('/edit', extra: pokemon);
 
-    PokemonEditScreenResult screenResult = await Navigator.of(context).push(
+    PokemonEditScreenResult? screenResult = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PokemonEditScreen(initialPokemon: pokemon),
       ),
     );
 
     late String message;
-    switch (screenResult) {
+    switch (screenResult ?? PokemonEditScreenResult.canceled) {
       case PokemonEditScreenResult.canceled:
         message = "Cancelled";
         break;
