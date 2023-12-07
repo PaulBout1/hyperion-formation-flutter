@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon_type.dart';
 
@@ -9,8 +10,8 @@ class PokeTypeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.network(
-          _pokemonType.imageUrl,
+        CachedNetworkImage(
+          imageUrl: _pokemonType.imageUrl,
           width: 50,
           height: 50,
         ),

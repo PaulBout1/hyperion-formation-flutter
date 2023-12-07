@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon_type.dart';
 
@@ -37,7 +38,7 @@ class _PokemonTypeChipState extends State<PokemonTypeChip> {
       onSelected: _onChange,
       selected: _isSelected,
       label: Text(widget._type.name),
-      avatar: Image.network(widget._type.imageUrl),
+      avatar: CachedNetworkImage(imageUrl: widget._type.imageUrl),
     );
   }
 }

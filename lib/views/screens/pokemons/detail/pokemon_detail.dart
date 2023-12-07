@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/views/screens/pokemons/detail/pokemon_type_widget.dart';
@@ -21,7 +22,7 @@ class PokemonDetail extends StatelessWidget {
                 Expanded(
                   child: Hero(
                     tag: "pokemon:${_pokemon.id}",
-                    child: Image.network(_pokemon.imageUrl),
+                    child: CachedNetworkImage(imageUrl: _pokemon.imageUrl),
                   ),
                 ),
                 Padding(

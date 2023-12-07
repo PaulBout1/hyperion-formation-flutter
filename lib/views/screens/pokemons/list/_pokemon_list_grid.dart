@@ -24,11 +24,11 @@ class _ListView extends StatelessWidget {
           child: ListTile(
             selected: selectedPokemon == _pokemons[index],
             leading: CircleAvatar(
-              backgroundImage: Image.network(
+              backgroundImage: CachedNetworkImageProvider(
                 _pokemons[index].imageUrl,
-                cacheHeight: 100,
-                cacheWidth: 100,
-              ).image,
+                maxHeight: 100,
+                maxWidth: 100,
+              ),
             ),
             title: Text(_pokemons[index].name),
             subtitle: Text(_pokemons[index].types.map((t) => t.name).join(',')),
@@ -74,11 +74,11 @@ class _GridView extends StatelessWidget {
                 child: Column(
                   children: [
                     Expanded(
-                      child: Image.network(
-                        _pokemons[index].imageUrl,
+                      child: CachedNetworkImage(
+                        imageUrl: _pokemons[index].imageUrl,
                         fit: BoxFit.cover,
-                        cacheHeight: 100,
-                        cacheWidth: 100,
+                        memCacheHeight: 100,
+                        memCacheWidth: 100,
                       ),
                     ),
                     Text(_pokemons[index].name),
