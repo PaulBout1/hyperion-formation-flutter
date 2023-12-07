@@ -6,6 +6,7 @@ import 'package:pokemon/views/poke_theme.dart';
 import 'package:pokemon/views/screens/pokemons/detail/pokemon_detail.dart';
 import 'package:pokemon/views/screens/pokemons/list/pokemon_list.dart';
 import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
+import 'package:pokemon/views/widgets/confirm_dialog.dart';
 
 class PokemonsScreen extends StatefulWidget {
   const PokemonsScreen({super.key});
@@ -81,6 +82,29 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
     setState(() {});
   }
 
+  _deletePokemonList(BuildContext context) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => const PokeConfirmDialog(
+          title: 'Delete pokemon list ?', content: 'Are you sure ?'),
+    );
+
+    if (result == true) {
+      setState(() {
+        _pokemons = null;
+        _selectedPokemon = null;
+      });
+    }
+  }
+
+  _generatePokemonList(BuildContext context) async {
+    _selectedPokemon = null;
+    _pokemons = null;
+    setState(() {});
+    await pokeRepository.api2FireStore();
+    await _fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,10 +112,18 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
         leading: const Icon(Icons.home),
         title: Text(context.intl.appName),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           IconButton(
-              onPressed: () => _editPokemon(context),
-              icon: const Icon(Icons.add)),
+            onPressed: () => _deletePokemonList(context),
+            icon: const Icon(Icons.clear_all),
+          ),
+          IconButton(
+            onPressed: () => _generatePokemonList(context),
+            icon: const Icon(Icons.upload),
+          ),
+          IconButton(
+            onPressed: () => _editPokemon(context),
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
       body: Row(children: [

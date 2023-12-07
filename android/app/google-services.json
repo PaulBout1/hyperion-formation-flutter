@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "724700203580",
+    "project_id": "formation-pokemons",
+    "storage_bucket": "formation-pokemons.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724700203580:android:f4b294c57421a785d41139",
+        "android_client_info": {
+          "package_name": "fr.formation.pokemon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbILniNWEC2XspLIR3g3-mcaaoKejjbPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

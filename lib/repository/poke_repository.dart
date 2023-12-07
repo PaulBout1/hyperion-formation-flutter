@@ -1,4 +1,5 @@
 import 'package:pokemon/models/pokemon_type.dart';
+import 'package:pokemon/repository/api/pokemon_firestore_api.dart';
 import 'package:pokemon/utils/extension/iterable_extension.dart';
 
 import '../models/pokemon.dart';
@@ -6,15 +7,27 @@ import '../models/pokemon.dart';
 import 'api/poke_api.dart';
 
 class PokeRepository {
+  final _pokeApi = const PokeApi();
+  final _pokeFireStore = PokemonFireStoreApi();
+
   List<Pokemon>? _pokemons;
 
-  /// Fetches a list of [Pokemon] from the [PokeApi].
+  Future<void> api2FireStore() async {
+    _pokemons = await _pokeApi.fetchPokemons();
+    await _pokeFireStore.addPokemons(_pokemons!);
+  }
+
+  Stream<List<Pokemon>> fetchPokemonsStream() {
+    return _pokeFireStore.fetchPokemonsStream();
+  }
+
+  /// Fetches a list of [Pokemon] from the [_pokeApi].
   Future<List<Pokemon>> fetchPokemons({bool forceReload = false}) async {
     // repository should return local data if available and not expired
     if (_pokemons != null && !forceReload) {
       return Future.value(_pokemons!);
     }
-    _pokemons = await pokeApi.fetchPokemons();
+    _pokemons = await _pokeFireStore.fetchPokemons();
     return Future.value(_pokemons!);
   }
 
@@ -30,6 +43,7 @@ class PokeRepository {
   }
 
   Future<void> addPokemon(Pokemon pokemon) async {
+    await _pokeFireStore.addPokemon(pokemon);
     pokemon.id = (_pokemons?.length ?? 0) + 1;
     _pokemons
       ?..add(pokemon)
@@ -37,11 +51,17 @@ class PokeRepository {
   }
 
   Future<void> updatePokemon(Pokemon pokemon) async {
+    await _pokeFireStore.updatePokemon(pokemon);
     final index = _pokemons?.indexWhere((p) => p.id == pokemon.id);
     if (index != null && index >= 0) {
       _pokemons?[index] = pokemon;
     }
     _pokemons?.sortByName();
+  }
+
+  Future<void> deletePokemon(Pokemon pokemon) async {
+    await _pokeFireStore.deletePokemon(pokemon);
+    _pokemons?.removeWhere((p) => p.id == pokemon.id);
   }
 }
 

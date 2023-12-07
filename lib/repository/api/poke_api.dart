@@ -20,5 +20,3 @@ class PokeApi {
     }
   }
 }
-
-const pokeApi = PokeApi();

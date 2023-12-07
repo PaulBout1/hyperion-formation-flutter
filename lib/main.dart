@@ -1,7 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pokemon/firebase_options.dart';
 import 'package:pokemon/views/poke_app.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const PokeApp());
 }
 
@@ -50,3 +54,9 @@ void main() {
 ///  * logging 
 ///  * performance (profile)
 /// hero animation :: https://www.youtube.com/watch?v=Be9UH1kXFDw
+/// flutterflow
+/// 
+/// Firebase
+///  * https://firebase.flutter.dev/docs/firestore/usage
+/// Bloc 
+/// GetIt
