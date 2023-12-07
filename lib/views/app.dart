@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pokemon/views/poke_theme.dart';
 import 'package:pokemon/views/screens/pokemons/pokemons_screen.dart';
 
 class App extends StatelessWidget {
@@ -8,16 +9,21 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      localizationsDelegates: [
+    return MaterialApp(
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en'),
         Locale('fr'),
       ],
-      home: SafeArea(child: Scaffold(body: PokemonsScreen())),
+      theme: PokeTheme.themeLight,
+      darkTheme: PokeTheme.themeDark,
+      themeMode: ThemeMode.light,
+      home: const SafeArea(child: PokemonsScreen()),
     );
   }
 }

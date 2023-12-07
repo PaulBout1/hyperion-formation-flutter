@@ -3,7 +3,7 @@ import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/utils/extension/context_extension.dart';
 import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
-import 'package:pokemon/views/screens/pokemons/pokemon_detail.dart';
+import 'package:pokemon/views/screens/pokemons/detail/pokemon_detail.dart';
 import 'package:pokemon/views/screens/pokemons/pokemon_list.dart';
 
 class PokemonsScreen extends StatefulWidget {
@@ -56,43 +56,41 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const Icon(Icons.home),
-          title: Text(context.intl.appName),
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.sort)),
-            IconButton(onPressed: _editPokemon, icon: const Icon(Icons.add)),
-          ],
-        ),
-        body: Row(children: [
-          Flexible(
-            flex: 1,
-            child: PokemonList(
-              _pokemons,
-              selectedPokemon: _selectedPokemon,
-              onTap: _onTap,
-              onRefresh: _fetchData,
-              onDelete: _onDeletePokemon,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(Icons.home),
+        title: Text(context.intl.appName),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.sort)),
+          IconButton(onPressed: _editPokemon, icon: const Icon(Icons.add)),
+        ],
+      ),
+      body: Row(children: [
+        Flexible(
+          flex: 1,
+          child: PokemonList(
+            _pokemons,
+            selectedPokemon: _selectedPokemon,
+            onTap: _onTap,
+            onRefresh: _fetchData,
+            onDelete: _onDeletePokemon,
           ),
-          const VerticalDivider(
-            color: Colors.grey,
-            width: 4,
-            thickness: 1,
-          ),
-          Flexible(
-            flex: 2,
-            child: PokemonDetail(_selectedPokemon),
-          )
-        ]),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => _editPokemon(_selectedPokemon),
-          label: const Text('Edit'),
-          icon: const Icon(Icons.edit),
         ),
+        const VerticalDivider(
+          color: Colors.grey,
+          width: 4,
+          thickness: 1,
+        ),
+        Flexible(
+          flex: 2,
+          child: PokemonDetail(_selectedPokemon),
+        )
+      ]),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _editPokemon(_selectedPokemon),
+        label: const Text('Edit'),
+        icon: const Icon(Icons.edit),
       ),
     );
   }

@@ -65,58 +65,72 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: Text(context.intl.appName)),
-        body: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: SingleChildScrollView(
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text('Pokemon',
-                          style: Theme.of(context).textTheme.displayLarge),
-                      TextField(
-                        decoration: const InputDecoration(label: Text('name')),
-                        controller: _nameController,
-                      ),
-                      TextField(
-                        decoration: const InputDecoration(label: Text('image')),
-                        controller: _imageController,
-                      ),
-                      if (_allPokemonTypes != null) ...[
+        body: Row(
+          children: [
+            Flexible(
+              child: Hero(
+                tag: "pokemon:${_pokemon.id}",
+                child: Image.network(_pokemon.imageUrl),
+              ),
+            ),
+            const VerticalDivider(thickness: 1, width: 1),
+            Flexible(
+              flex: 2,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(100.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextField(
+                          decoration:
+                              const InputDecoration(label: Text('name')),
+                          controller: _nameController,
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                            label: const Text('image'),
+                            contentPadding: const EdgeInsets.only(left: 5),
+                            suffixIcon: IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {},
+                              icon: const Icon(Icons.download),
+                            ),
+                          ),
+                          controller: _imageController,
+                        ),
+                        if (_allPokemonTypes != null) ...[
+                          const SizedBox(height: 20),
+                          const Text('Types'),
+                          Wrap(
+                            spacing: 5,
+                            children: _allPokemonTypes
+                                    ?.map(
+                                      (type) => PokemonTypeChip(
+                                        type,
+                                        initialValue:
+                                            _pokemon.types.contains(type),
+                                        onChanged: (value) =>
+                                            _onTypeChanged(type, value),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
                         const SizedBox(height: 20),
-                        const Text(
-                          'Types',
-                        ),
-                        Wrap(
-                          spacing: 5,
-                          children: _allPokemonTypes
-                                  ?.map(
-                                    (type) => PokemonTypeChip(
-                                      type,
-                                      initialValue:
-                                          _pokemon.types.contains(type),
-                                      onChanged: (value) =>
-                                          _onTypeChanged(type, value),
-                                    ),
-                                  )
-                                  .toList() ??
-                              [],
-                        ),
+                        FilledButton(
+                          onPressed: _pokemon.isValid() ? _saveTapped : null,
+                          child: const Text('Save'),
+                        )
                       ],
-                      FilledButton(
-                        onPressed: _pokemon.isValid() ? _saveTapped : null,
-                        child: const Text('Save'),
-                      )
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/views/app.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(const App());
 }
 
@@ -35,8 +34,9 @@ void main() {
 /// * Découpage
 /// * Widgets avec états (pokemon tile with heart / loading)
 
-
-/// intl 
-/// theming
-/// navigation
+/// hero animation :: https://www.youtube.com/watch?v=Be9UH1kXFDw
+/// intl  :: https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#adding-your-own-localized-messages
+/// theming :: ThemeOf..
+/// navigation -- https://docs.flutter.dev/ui/navigation
 /// snackbar
+/// inspector / debugger
