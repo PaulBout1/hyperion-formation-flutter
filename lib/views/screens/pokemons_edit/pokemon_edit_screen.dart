@@ -5,6 +5,8 @@ import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/utils/extension/context_extension.dart';
 import 'package:pokemon/views/screens/pokemons_edit/pokemon_type_chip.dart';
 
+enum PokemonEditScreenResult { canceled, added, updated }
+
 class PokemonEditScreen extends StatefulWidget {
   final Pokemon? initialPokemon;
 
@@ -50,14 +52,18 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
     setState(() {});
   }
 
-  _saveTapped() async {
-    if (!_pokemon.isValid()) return;
+  _onCancel() {
+    Navigator.of(context).pop(PokemonEditScreenResult.canceled);
+  }
+
+  _onSave() async {
     if (_pokemon.id == 0) {
       await pokeRepository.addPokemon(_pokemon);
+      if (mounted) Navigator.of(context).pop(PokemonEditScreenResult.added);
     } else {
       await pokeRepository.updatePokemon(_pokemon);
+      if (mounted) Navigator.of(context).pop(PokemonEditScreenResult.updated);
     }
-    if (context.mounted) Navigator.of(context).pop();
   }
 
   @override
@@ -120,10 +126,21 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
                           ),
                         ],
                         const SizedBox(height: 20),
-                        FilledButton(
-                          onPressed: _pokemon.isValid() ? _saveTapped : null,
-                          child: const Text('Save'),
-                        )
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            FilledButton.icon(
+                              icon: const Icon(Icons.cancel),
+                              onPressed: _onCancel,
+                              label: const Text('cancel'),
+                            ),
+                            FilledButton.icon(
+                              icon: const Icon(Icons.save),
+                              onPressed: _pokemon.isValid() ? _onSave : null,
+                              label: const Text('Save'),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

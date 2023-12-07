@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/utils/extension/context_extension.dart';
-import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
 import 'package:pokemon/views/screens/pokemons/detail/pokemon_detail.dart';
-import 'package:pokemon/views/screens/pokemons/pokemon_list.dart';
+import 'package:pokemon/views/screens/pokemons/list/pokemon_list.dart';
+import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
 
 class PokemonsScreen extends StatefulWidget {
   const PokemonsScreen({super.key});
@@ -45,12 +45,36 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
     setState(() {});
   }
 
-  _editPokemon([Pokemon? pokemon]) async {
-    await Navigator.of(context).push(
+  _editPokemon(BuildContext context, [Pokemon? pokemon]) async {
+    // GoRouter.of(context).go('/edit', extra: pokemon);
+
+    PokemonEditScreenResult screenResult = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PokemonEditScreen(initialPokemon: pokemon),
       ),
     );
+
+    late String message;
+    switch (screenResult) {
+      case PokemonEditScreenResult.canceled:
+        message = "Cancelled";
+        break;
+      case PokemonEditScreenResult.added:
+        message = "Successfully added";
+        break;
+      case PokemonEditScreenResult.updated:
+        message = "Successfully updated";
+        break;
+    }
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          showCloseIcon: true,
+          content: Text(message),
+        ),
+      );
+    }
+
     setState(() {});
   }
 
@@ -62,8 +86,9 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
         title: Text(context.intl.appName),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.sort)),
-          IconButton(onPressed: _editPokemon, icon: const Icon(Icons.add)),
+          IconButton(
+              onPressed: () => _editPokemon(context),
+              icon: const Icon(Icons.add)),
         ],
       ),
       body: Row(children: [
@@ -88,7 +113,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
         )
       ]),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _editPokemon(_selectedPokemon),
+        onPressed: () => _editPokemon(context, _selectedPokemon),
         label: const Text('Edit'),
         icon: const Icon(Icons.edit),
       ),

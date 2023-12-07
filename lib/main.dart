@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon/views/app.dart';
+import 'package:pokemon/views/poke_app.dart';
 
 void main() {
-  runApp(const App());
+  runApp(const PokeApp());
 }
 
 /// flutter create --empty --org=fr.formation --platforms=android,web --project-name pokemon .
@@ -38,5 +38,11 @@ void main() {
 /// intl  :: https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#adding-your-own-localized-messages
 /// theming :: ThemeOf..
 /// navigation -- https://docs.flutter.dev/ui/navigation
+///   * TabBar (list/grid)
+///   * push / pop (edit pokemon buttons)
+///   * go router
 /// snackbar
+/// network image provider
 /// inspector / debugger
+///  * https://docs.flutter.dev/tools/devtools/inspector
+///   profile

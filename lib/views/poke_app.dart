@@ -4,11 +4,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pokemon/views/poke_theme.dart';
 import 'package:pokemon/views/screens/pokemons/pokemons_screen.dart';
 
-class App extends StatelessWidget {
-  const App({super.key});
+class PokeApp extends StatelessWidget {
+  const PokeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -23,7 +24,15 @@ class App extends StatelessWidget {
       theme: PokeTheme.themeLight,
       darkTheme: PokeTheme.themeDark,
       themeMode: ThemeMode.light,
-      home: const SafeArea(child: PokemonsScreen()),
+      // routerConfig: pokeRoutes,
+      home: _Home(),
     );
+  }
+}
+
+class _Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const SafeArea(child: Scaffold(body: PokemonsScreen()));
   }
 }
