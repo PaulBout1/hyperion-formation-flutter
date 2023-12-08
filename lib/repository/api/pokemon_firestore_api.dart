@@ -40,7 +40,7 @@ class PokemonFireStoreApi {
     await pokeFireStore
         .collection('pokemons')
         .doc(pokemon.id.toString())
-        .update(pokemon.toJson());
+        .set(pokemon.toJson(), SetOptions(merge: true));
   }
 
   Future<void> deletePokemon(Pokemon pokemon) async {
