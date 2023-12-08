@@ -4,26 +4,32 @@ import 'package:pokemon/models/pokemon.dart';
 final pokeFireStore = FirebaseFirestore.instance;
 
 class PokemonFireStoreApi {
-  Stream<List<Pokemon>> fetchPokemonsStream() {
-    return pokeFireStore.collection('pokemons').snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => Pokemon.fromJson(doc.data())).toList();
-    });
-  }
+  CollectionReference<Map<String, dynamic>> get _pokemonsRef =>
+      pokeFireStore.collection('pokemon');
+
+  Stream<List<Pokemon>> fetchPokemonsStream() =>
+      _pokemonsRef.orderBy('name').snapshots().map((snapshot) => snapshot.docs
+          .map((doc) => doc.data())
+          .map(Pokemon.fromJson)
+          .toList());
 
   Future<List<Pokemon>> fetchPokemons() async {
-    final pokemons = await pokeFireStore.collection('pokemons').get();
-    return pokemons.docs.map((e) => Pokemon.fromJson(e.data())).toList();
+    final pokemons = await _pokemonsRef.orderBy('name').get();
+    return pokemons.docs
+        .map((doc) => doc.data())
+        .map(Pokemon.fromJson)
+        .toList();
   }
 
   Future<void> addPokemon(Pokemon pokemon) async {
-    await pokeFireStore.collection('pokemons').add(pokemon.toJson());
+    await _pokemonsRef.add(pokemon.toJson());
   }
 
   Future<void> addPokemons(List<Pokemon> pokemons) async {
     final batch = pokeFireStore.batch();
     for (var pokemon in pokemons) {
       batch.set(
-        pokeFireStore.collection('pokemons').doc(pokemon.id.toString()),
+        _pokemonsRef.doc(pokemon.id.toString()),
         pokemon.toJson(),
       );
     }
@@ -42,5 +48,14 @@ class PokemonFireStoreApi {
         .collection('pokemons')
         .doc(pokemon.id.toString())
         .delete();
+  }
+
+  Future<void> deleteAllPokemons() async {
+    final batch = pokeFireStore.batch();
+    final pokemons = await _pokemonsRef.get();
+    for (var pokemon in pokemons.docs) {
+      batch.delete(pokemon.reference);
+    }
+    await batch.commit();
   }
 }

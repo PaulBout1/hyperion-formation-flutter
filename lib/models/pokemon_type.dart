@@ -4,9 +4,8 @@ part 'pokemon_type.g.dart';
 
 @JsonSerializable()
 class PokemonType {
-  
   final String name;
-  
+
   @JsonKey(name: 'image')
   final String imageUrl;
 
@@ -16,4 +15,6 @@ class PokemonType {
       _$PokemonTypeFromJson(json);
 
   Map<String, dynamic> toJson() => _$PokemonTypeToJson(this);
+
+  bool isEqual(PokemonType other) => name == other.name;
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/poke_repository.dart';
@@ -19,33 +21,36 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   List<Pokemon>? _pokemons;
   Pokemon? _selectedPokemon;
 
+  late StreamSubscription _pokemonSS;
+
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _pokemonSS = pokeRepository.pokeStream().listen(_onFirestoreStreamEvent);
   }
 
-  Future<void> _fetchData({bool forceReload = false}) async {
-    setState(() {
-      _pokemons = null;
-      _selectedPokemon = null;
-    });
-    final pokemons = await pokeRepository.fetchPokemons(
-      forceReload: forceReload,
-    );
-    setState(() {
-      _pokemons = pokemons;
-      _selectedPokemon = pokemons.firstOrNull;
-    });
+  @override
+  void dispose() {
+    _pokemonSS.cancel();
+    super.dispose();
+  }
+
+  _onFirestoreStreamEvent(List<Pokemon> snapshot) {
+    _pokemons = snapshot;
+    _selectedPokemon ??= _pokemons?.firstOrNull;
+    setState(() {});
   }
 
   _onTap(Pokemon pokemon) {
     setState(() => _selectedPokemon = pokemon);
   }
 
-  _onDeletePokemon(Pokemon pokemon) {
+  _onDeletePokemon(Pokemon pokemon) async {
     _pokemons?.remove(pokemon);
-    if (_selectedPokemon == pokemon) _selectedPokemon = _pokemons?.firstOrNull;
+    await pokeRepository.deletePokemon(pokemon);
+    if (_selectedPokemon == pokemon) {
+      _selectedPokemon = _pokemons?.firstOrNull;
+    }
     setState(() {});
   }
 
@@ -70,7 +75,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
         message = "Successfully updated";
         break;
     }
-    if (mounted) {
+    if (mounted && screenResult != PokemonEditScreenResult.canceled) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           showCloseIcon: true,
@@ -83,26 +88,39 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   }
 
   _deletePokemonList(BuildContext context) async {
-    final result = await showDialog<bool>(
+    final dialogResult = await showDialog<bool>(
       context: context,
       builder: (context) => const PokeConfirmDialog(
           title: 'Delete pokemon list ?', content: 'Are you sure ?'),
     );
 
-    if (result == true) {
-      setState(() {
-        _pokemons = null;
-        _selectedPokemon = null;
-      });
-    }
+    if (dialogResult != true) return;
+
+    setState(() {
+      _pokemons = null;
+      _selectedPokemon = null;
+    });
+
+    await pokeRepository.deleteAllPokemons();
+
+    setState(() {
+      _pokemons = [];
+    });
   }
 
   _generatePokemonList(BuildContext context) async {
+    final dialogResult = await showDialog<bool>(
+      context: context,
+      builder: (context) => const PokeConfirmDialog(
+          title: 'Generate pokemon list ?', content: 'Are you sure ?'),
+    );
+
+    if (dialogResult != true) return;
+
     _selectedPokemon = null;
     _pokemons = null;
     setState(() {});
-    await pokeRepository.api2FireStore();
-    await _fetchData();
+    await pokeRepository.feedFireStore();
   }
 
   @override
@@ -135,7 +153,6 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
               _pokemons,
               selectedPokemon: _selectedPokemon,
               onTap: _onTap,
-              onRefresh: () => _fetchData(forceReload: true),
               onDelete: _onDeletePokemon,
             ),
           ),

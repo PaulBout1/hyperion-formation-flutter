@@ -5,15 +5,15 @@ class PokeDismissible extends StatelessWidget {
   final Function() onDelete;
 
   const PokeDismissible({
-    required Key key,
+    super.key,
     required this.onDelete,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: key!,
+      key: UniqueKey(),
       onDismissed: (direction) => onDelete(),
       direction: DismissDirection.startToEnd,
       background: Container(

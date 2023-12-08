@@ -111,8 +111,10 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
                                     ?.map(
                                       (type) => PokemonTypeChip(
                                         type,
-                                        initialValue:
-                                            _pokemon.types.contains(type),
+                                        initialValue: _pokemon.types
+                                            .where((element) =>
+                                                element.isEqual(type))
+                                            .isNotEmpty,
                                         onChanged: (value) =>
                                             _onTypeChanged(type, value),
                                       ),

@@ -12,12 +12,12 @@ class PokeRepository {
 
   List<Pokemon>? _pokemons;
 
-  Future<void> api2FireStore() async {
+  Future<void> feedFireStore() async {
     _pokemons = await _pokeApi.fetchPokemons();
     await _pokeFireStore.addPokemons(_pokemons!);
   }
 
-  Stream<List<Pokemon>> fetchPokemonsStream() {
+  Stream<List<Pokemon>> pokeStream() {
     return _pokeFireStore.fetchPokemonsStream();
   }
 
@@ -62,6 +62,11 @@ class PokeRepository {
   Future<void> deletePokemon(Pokemon pokemon) async {
     await _pokeFireStore.deletePokemon(pokemon);
     _pokemons?.removeWhere((p) => p.id == pokemon.id);
+  }
+
+  Future<void> deleteAllPokemons() async {
+    await _pokeFireStore.deleteAllPokemons();
+    _pokemons?.clear();
   }
 }
 

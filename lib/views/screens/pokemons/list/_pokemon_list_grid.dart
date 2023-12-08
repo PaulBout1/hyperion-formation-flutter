@@ -65,7 +65,7 @@ class _GridView extends StatelessWidget {
           childAspectRatio: 1,
         ),
         itemBuilder: (context, index) => PokeDismissible(
-          key: ValueKey(_pokemons[index].id),
+          key: ValueKey('grid-${_pokemons[index].id}'),
           onDelete: () => onDelete(_pokemons[index]),
           child: GridTile(
             child: Card(

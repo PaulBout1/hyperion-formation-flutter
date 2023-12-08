@@ -58,5 +58,6 @@ void main() async {
 /// 
 /// Firebase
 ///  * https://firebase.flutter.dev/docs/firestore/usage
+///  * https://cloud.google.com/firestore/docs/query-data/queries?hl=fr#dart
 /// Bloc 
 /// GetIt

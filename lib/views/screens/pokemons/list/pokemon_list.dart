@@ -11,14 +11,12 @@ class PokemonList extends StatefulWidget {
   final List<Pokemon>? _pokemons;
   final Pokemon? selectedPokemon;
   final Function(Pokemon pokemon) onTap;
-  final Future<void> Function() onRefresh;
   final Function(Pokemon pokemon) onDelete;
 
   const PokemonList(
     this._pokemons, {
     required this.selectedPokemon,
     required this.onTap,
-    required this.onRefresh,
     required this.onDelete,
     super.key,
   });
@@ -54,22 +52,16 @@ class _PokemonListState extends State<PokemonList>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    RefreshIndicator(
-                      onRefresh: widget.onRefresh,
-                      child: _ListView(
-                        widget._pokemons!,
-                        selectedPokemon: widget.selectedPokemon,
-                        onTap: widget.onTap,
-                        onDelete: widget.onDelete,
-                      ),
+                    _ListView(
+                      widget._pokemons!,
+                      selectedPokemon: widget.selectedPokemon,
+                      onTap: widget.onTap,
+                      onDelete: widget.onDelete,
                     ),
-                    RefreshIndicator(
-                      onRefresh: widget.onRefresh,
-                      child: _GridView(
-                        widget._pokemons!,
-                        onTap: widget.onTap,
-                        onDelete: widget.onDelete,
-                      ),
+                    _GridView(
+                      widget._pokemons!,
+                      onTap: widget.onTap,
+                      onDelete: widget.onDelete,
                     ),
                   ],
                 ),
