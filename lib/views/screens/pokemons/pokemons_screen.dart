@@ -88,12 +88,11 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   }
 
   _deletePokemonList(BuildContext context) async {
-    final dialogResult = await showDialog<bool>(
+    final dialogResult = await showPokeConfirmDialog(
       context: context,
-      builder: (context) => const PokeConfirmDialog(
-          title: 'Delete pokemon list ?', content: 'Are you sure ?'),
+      title: 'Delete pokemon list ?',
+      content: 'Are you sure ?',
     );
-
     if (dialogResult != true) return;
 
     setState(() {
@@ -109,10 +108,10 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   }
 
   _generatePokemonList(BuildContext context) async {
-    final dialogResult = await showDialog<bool>(
+    final dialogResult = await showPokeConfirmDialog(
       context: context,
-      builder: (context) => const PokeConfirmDialog(
-          title: 'Generate pokemon list ?', content: 'Are you sure ?'),
+      title: 'Generate pokemon list ?',
+      content: 'Are you sure ?',
     );
 
     if (dialogResult != true) return;

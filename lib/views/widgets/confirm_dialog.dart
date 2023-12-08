@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PokeConfirmDialog extends StatelessWidget {
+class _PokeConfirmDialog extends StatelessWidget {
   final String title;
   final String content;
 
-  const PokeConfirmDialog({
-    super.key,
+  const _PokeConfirmDialog({
     required this.title,
     required this.content,
   });
@@ -27,4 +26,18 @@ class PokeConfirmDialog extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<bool?> showPokeConfirmDialog({
+  required BuildContext context,
+  required String title,
+  required String content,
+}) async {
+  return await showDialog<bool>(
+    context: context,
+    builder: (context) => _PokeConfirmDialog(
+      title: title,
+      content: content,
+    ),
+  );
 }
