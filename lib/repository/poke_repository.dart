@@ -9,17 +9,18 @@ class PokeRepository {
   List<Pokemon>? _pokemons;
 
   /// Fetches a list of [Pokemon] from the [PokeApi].
-  Future<List<Pokemon>> fetchPokemons({int chunkSize = 50}) async {
+  Future<List<Pokemon>> fetchPokemons({bool forceReload = false}) async {
     // repository should return local data if available and not expired
-    if (_pokemons != null) {
+    if (_pokemons != null && !forceReload) {
       return Future.value(_pokemons!);
     }
-    _pokemons = await pokeApi.fetchPokemons(chunkSize: chunkSize);
+    _pokemons = await pokeApi.fetchPokemons();
     return Future.value(_pokemons!);
   }
 
   Future<List<PokemonType>> fetchPokemonTypes() async {
     final pokemons = await fetchPokemons();
+
     final types = pokemons
         .expand((pokemon) => pokemon.types)
         .distinctBy((e) => e.name)

@@ -5,7 +5,7 @@ import 'package:pokemon/models/pokemon_type.dart';
 class PokemonTypeChip extends StatefulWidget {
   final PokemonType _type;
   final bool initialValue;
-  final Function(bool) onChanged;
+  final void Function(bool) onChanged;
 
   const PokemonTypeChip(
     this._type, {

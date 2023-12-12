@@ -9,7 +9,6 @@ class PokeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -22,8 +21,6 @@ class PokeApp extends StatelessWidget {
         Locale('fr'),
       ],
       theme: PokeTheme.themeLight,
-      darkTheme: PokeTheme.themeDark,
-      themeMode: ThemeMode.light,
       // routerConfig: pokeRoutes,
       home: _Home(),
     );

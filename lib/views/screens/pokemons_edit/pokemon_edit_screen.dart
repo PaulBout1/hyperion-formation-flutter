@@ -21,21 +21,16 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
   List<PokemonType>? _allPokemonTypes;
   late Pokemon _pokemon;
   late TextEditingController _nameController;
-  late TextEditingController _imageController;
+  late TextEditingController _imgController;
 
   @override
   void initState() {
     _pokemon = widget.initialPokemon ?? Pokemon.empty();
 
-    _nameController = TextEditingController(text: _pokemon.name);
-    _imageController = TextEditingController(text: _pokemon.imageUrl);
-
-    _nameController.addListener(() {
-      _pokemon.name = _nameController.text;
-    });
-    _imageController.addListener(() {
-      _pokemon.imageUrl = _imageController.text;
-    });
+    _nameController = TextEditingController(text: _pokemon.name)
+      ..addListener(() => _pokemon.name = _nameController.text);
+    _imgController = TextEditingController(text: _pokemon.imageUrl)
+      ..addListener(() => _pokemon.imageUrl = _imgController.text);
 
     pokeRepository
         .fetchPokemonTypes()
@@ -105,7 +100,7 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
                               icon: const Icon(Icons.download),
                             ),
                           ),
-                          controller: _imageController,
+                          controller: _imgController,
                         ),
                         if (_allPokemonTypes != null) ...[
                           const SizedBox(height: 20),

@@ -1,3 +1,13 @@
 {
-    "appName": "Pokemons"
+    "appName": "Pokémons",
+    "pokemonListFooter": "Il y a {pokemonCount} pokemons dans le jeu",
+    "@pokemonListFooter": {
+        "description": "nombre de pokemons",
+        "placeholders": {
+            "pokemonCount": {
+                "type": "int",
+                "example": "12"
+            }
+        }
+    }
 }

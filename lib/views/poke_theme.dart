@@ -6,7 +6,7 @@ class PokeTheme {
 
   static final themeLight = ThemeData(
     colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: Colors.lightBlue,
+      primarySwatch: Colors.red,
       accentColor: Colors.blueAccent.shade700,
       brightness: Brightness.light,
       backgroundColor: Colors.lightBlue.shade50,

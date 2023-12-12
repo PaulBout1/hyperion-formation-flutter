@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/utils/extension/context_extension.dart';
+import 'package:pokemon/views/poke_theme.dart';
 import 'package:pokemon/views/screens/pokemons/detail/pokemon_detail.dart';
 import 'package:pokemon/views/screens/pokemons/list/pokemon_list.dart';
 import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
@@ -23,12 +24,14 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
     _fetchData();
   }
 
-  Future<void> _fetchData() async {
+  Future<void> _fetchData({bool forceReload = false}) async {
     setState(() {
       _pokemons = null;
       _selectedPokemon = null;
     });
-    final pokemons = await pokeRepository.fetchPokemons();
+    final pokemons = await pokeRepository.fetchPokemons(
+      forceReload: forceReload,
+    );
     setState(() {
       _pokemons = pokemons;
       _selectedPokemon = pokemons.firstOrNull;
@@ -94,12 +97,15 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
       body: Row(children: [
         Flexible(
           flex: 1,
-          child: PokemonList(
-            _pokemons,
-            selectedPokemon: _selectedPokemon,
-            onTap: _onTap,
-            onRefresh: _fetchData,
-            onDelete: _onDeletePokemon,
+          child: Theme(
+            data: PokeTheme.themeLight,
+            child: PokemonList(
+              _pokemons,
+              selectedPokemon: _selectedPokemon,
+              onTap: _onTap,
+              onRefresh: () => _fetchData(forceReload: true),
+              onDelete: _onDeletePokemon,
+            ),
           ),
         ),
         const VerticalDivider(

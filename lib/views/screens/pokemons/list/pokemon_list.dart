@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
+import 'package:pokemon/utils/extension/context_extension.dart';
 import 'package:pokemon/views/screens/pokemons/list/dismissable.dart';
 import 'package:pokemon/views/widgets/loading_widget.dart';
 
@@ -73,6 +74,8 @@ class _PokemonListState extends State<PokemonList>
                   ],
                 ),
               ),
+              Text(
+                  context.intl.pokemonListFooter(widget._pokemons?.length ?? 0))
             ],
           );
   }

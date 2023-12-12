@@ -34,7 +34,6 @@ void main() {
 /// * Découpage
 /// * Widgets avec états (pokemon tile with heart / loading)
 
-/// hero animation :: https://www.youtube.com/watch?v=Be9UH1kXFDw
 /// intl  :: https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#adding-your-own-localized-messages
 /// theming :: ThemeOf..
 /// navigation -- https://docs.flutter.dev/ui/navigation
@@ -43,9 +42,11 @@ void main() {
 ///   * go router
 /// snackbar
 /// network image provider
+
 /// devtools,  / debugger
 ///  * https://docs.flutter.dev/tools/devtools/inspector
 ///  * memory
 ///  * network 
 ///  * logging 
 ///  * performance (profile)
+/// hero animation :: https://www.youtube.com/watch?v=Be9UH1kXFDw
