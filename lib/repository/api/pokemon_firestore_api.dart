@@ -4,9 +4,6 @@ import 'package:pokemon/models/pokemon.dart';
 final pokeFireStore = FirebaseFirestore.instance;
 
 class PokemonFireStoreApi {
-  CollectionReference<Map<String, dynamic>> get _pokemonsRef =>
-      pokeFireStore.collection('pokemon');
-
   Stream<List<Pokemon>> fetchPokemonsStream() =>
       _pokemonsRef.orderBy('name').snapshots().map((snapshot) => snapshot.docs
           .map((doc) => doc.data())
@@ -37,15 +34,13 @@ class PokemonFireStoreApi {
   }
 
   Future<void> updatePokemon(Pokemon pokemon) async {
-    await pokeFireStore
-        .collection('pokemons')
+    await _pokemonsRef
         .doc(pokemon.id.toString())
         .set(pokemon.toJson(), SetOptions(merge: true));
   }
 
   Future<void> deletePokemon(Pokemon pokemon) async {
-    await pokeFireStore
-        .collection('pokemons')
+    await _pokemonsRef
         .doc(pokemon.id.toString())
         .delete();
   }
@@ -58,4 +53,7 @@ class PokemonFireStoreApi {
     }
     await batch.commit();
   }
+
+  CollectionReference<Map<String, dynamic>> get _pokemonsRef =>
+      pokeFireStore.collection('pokemon');
 }
