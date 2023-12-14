@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/utils/extension/context_extension.dart';
-import 'package:pokemon/views/poke_theme.dart';
 import 'package:pokemon/views/screens/pokemons/detail/pokemon_detail.dart';
 import 'package:pokemon/views/screens/pokemons/list/pokemon_list.dart';
 import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
@@ -127,8 +126,12 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.home),
-        title: Text(context.intl.appName),
+        title: Text(context.intl.appName),  
         actions: [
+          IconButton(
+            onPressed: () => throw Exception('PokeCrash'),
+            icon: const Icon(Icons.bug_report),
+          ),
           IconButton(
             onPressed: () => _deletePokemonList(context),
             icon: const Icon(Icons.clear_all),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/utils/extension/context_extension.dart';
 import 'package:pokemon/views/screens/pokemons/detail/pokemon_type_widget.dart';
-import 'package:pokemon/views/widgets/poke_text_button.dart';
 
 class PokemonDetail extends StatelessWidget {
   final Pokemon? _pokemon;
@@ -21,7 +20,6 @@ class PokemonDetail extends StatelessWidget {
                   _pokemon.name,
                   style: context.textTheme.displayLarge,
                 ),
-                PokeTextButton(onPressed: () {}, child: const Text('PokeText')),
                 Expanded(
                   child: Hero(
                     tag: "pokemon:${_pokemon.id}",

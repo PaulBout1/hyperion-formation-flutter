@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "724700203580",
+    "firebase_url": "https://formation-pokemons-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "formation-pokemons",
     "storage_bucket": "formation-pokemons.appspot.com"
   },

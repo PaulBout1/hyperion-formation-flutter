@@ -55,6 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '724700203580',
     projectId: 'formation-pokemons',
     authDomain: 'formation-pokemons.firebaseapp.com',
+    databaseURL: 'https://formation-pokemons-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'formation-pokemons.appspot.com',
   );
 
@@ -63,6 +64,7 @@ class DefaultFirebaseOptions {
     appId: '1:724700203580:android:f4b294c57421a785d41139',
     messagingSenderId: '724700203580',
     projectId: 'formation-pokemons',
+    databaseURL: 'https://formation-pokemons-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'formation-pokemons.appspot.com',
   );
 }
