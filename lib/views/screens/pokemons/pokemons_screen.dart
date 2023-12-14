@@ -126,7 +126,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.home),
-        title: Text(context.intl.appName),  
+        title: Text(context.intl.appName),
         actions: [
           IconButton(
             onPressed: () => throw Exception('PokeCrash'),
@@ -149,14 +149,11 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
       body: Row(children: [
         Flexible(
           flex: 1,
-          child: Theme(
-            data: PokeTheme.themeLight,
-            child: PokemonList(
-              _pokemons,
-              selectedPokemon: _selectedPokemon,
-              onTap: _onTap,
-              onDelete: _onDeletePokemon,
-            ),
+          child: PokemonList(
+            _pokemons,
+            selectedPokemon: _selectedPokemon,
+            onTap: _onTap,
+            onDelete: _onDeletePokemon,
           ),
         ),
         const VerticalDivider(
