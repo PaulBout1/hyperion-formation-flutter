@@ -69,5 +69,3 @@ class PokeRepository {
     _pokemons?.clear();
   }
 }
-
-final pokeRepository = PokeRepository();

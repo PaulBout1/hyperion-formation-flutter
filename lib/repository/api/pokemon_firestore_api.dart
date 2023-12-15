@@ -4,14 +4,17 @@ import 'package:pokemon/models/pokemon.dart';
 final pokeFireStore = FirebaseFirestore.instance;
 
 class PokemonFireStoreApi {
-  Stream<List<Pokemon>> fetchPokemonsStream() =>
-      _pokemonsRef.orderBy('name').snapshots().map((snapshot) => snapshot.docs
+  Stream<List<Pokemon>> fetchPokemonsStream() => _pokemonsRef
+      .orderBy('name')
+      .limit(10)
+      .snapshots()
+      .map((snapshot) => snapshot.docs
           .map((doc) => doc.data())
           .map(Pokemon.fromJson)
           .toList());
 
   Future<List<Pokemon>> fetchPokemons() async {
-    final pokemons = await _pokemonsRef.orderBy('name').get();
+    final pokemons = await _pokemonsRef.orderBy('name').limit(10).get();
     return pokemons.docs
         .map((doc) => doc.data())
         .map(Pokemon.fromJson)
@@ -40,9 +43,7 @@ class PokemonFireStoreApi {
   }
 
   Future<void> deletePokemon(Pokemon pokemon) async {
-    await _pokemonsRef
-        .doc(pokemon.id.toString())
-        .delete();
+    await _pokemonsRef.doc(pokemon.id.toString()).delete();
   }
 
   Future<void> deleteAllPokemons() async {

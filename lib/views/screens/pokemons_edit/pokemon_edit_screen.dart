@@ -9,9 +9,14 @@ import 'package:pokemon/views/screens/pokemons_edit/pokemon_type_chip.dart';
 enum PokemonEditScreenResult { canceled, added, updated }
 
 class PokemonEditScreen extends StatefulWidget {
+  final PokeRepository _repo;
   final Pokemon? initialPokemon;
 
-  const PokemonEditScreen({this.initialPokemon, super.key});
+  const PokemonEditScreen(
+    this._repo, {
+    this.initialPokemon,
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _PokemonEditScreenState();
@@ -32,7 +37,7 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
     _imgController = TextEditingController(text: _pokemon.imageUrl)
       ..addListener(() => _pokemon.imageUrl = _imgController.text);
 
-    pokeRepository
+    widget._repo
         .fetchPokemonTypes()
         .then((value) => setState(() => _allPokemonTypes = value));
 
@@ -54,10 +59,10 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
 
   _onSave() async {
     if (_pokemon.id == 0) {
-      await pokeRepository.addPokemon(_pokemon);
+      await widget._repo.addPokemon(_pokemon);
       if (mounted) Navigator.of(context).pop(PokemonEditScreenResult.added);
     } else {
-      await pokeRepository.updatePokemon(_pokemon);
+      await widget._repo.updatePokemon(_pokemon);
       if (mounted) Navigator.of(context).pop(PokemonEditScreenResult.updated);
     }
   }
