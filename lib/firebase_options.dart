@@ -2,7 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show TargetPlatform, defaultTargetPlatform, kIsWeb;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -55,7 +55,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '724700203580',
     projectId: 'formation-pokemons',
     authDomain: 'formation-pokemons.firebaseapp.com',
-    databaseURL: 'https://formation-pokemons-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://formation-pokemons-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'formation-pokemons.appspot.com',
   );
 
@@ -64,7 +65,8 @@ class DefaultFirebaseOptions {
     appId: '1:724700203580:android:f4b294c57421a785d41139',
     messagingSenderId: '724700203580',
     projectId: 'formation-pokemons',
-    databaseURL: 'https://formation-pokemons-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://formation-pokemons-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'formation-pokemons.appspot.com',
   );
 }

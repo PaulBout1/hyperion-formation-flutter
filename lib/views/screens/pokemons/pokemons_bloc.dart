@@ -63,7 +63,7 @@ class PokemonsBloc extends Bloc<PokemonsEvent, PokemonsState> {
     on<PokemonsSelected>(_handlePokemonSelected);
   }
 
-  _handlePokemonsStreamRequested(
+  void _handlePokemonsStreamRequested(
     PokemonsStreamRequested event,
     Emitter emit,
   ) {
@@ -75,10 +75,10 @@ class PokemonsBloc extends Bloc<PokemonsEvent, PokemonsState> {
         .listen((pokes) => _handlePokemonStreamData(pokes, emit));
   }
 
-  _handlePokemonStreamData(List<Pokemon> pokes, Emitter emit) {
+  void _handlePokemonStreamData(List<Pokemon> pokes, Emitter emit) {
     // refresh data status if needed
     final newStatus = !state.status.isLoaded ? PokesStatusEnum.loaded : null;
-    Pokemon? currPokemon = state.selectedPokemon;
+    final currPokemon = state.selectedPokemon;
     Pokemon? newPokemon;
     if (currPokemon == null) {
       // if no selected pokemon, select the first one
@@ -92,14 +92,14 @@ class PokemonsBloc extends Bloc<PokemonsEvent, PokemonsState> {
       pokemons: pokes,
       status: newStatus,
       selectedPokemon: newPokemon,
-    ));
+    ),);
   }
 
   // delete pokemon from repo
-  _handlePokemonDeleted(PokemonsDeleted event, Emitter emit) =>
+  void _handlePokemonDeleted(PokemonsDeleted event, Emitter emit) =>
       _pokeRepo.deletePokemon(event.pokemon);
 
-  _handlePokemonSelected(PokemonsSelected event, Emitter emit) {
+  void _handlePokemonSelected(PokemonsSelected event, Emitter emit) {
     emit(state.copyWith(selectedPokemon: event.pokemon));
   }
 

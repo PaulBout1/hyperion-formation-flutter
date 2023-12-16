@@ -11,7 +11,7 @@ class PokemonFireStoreApi {
       .map((snapshot) => snapshot.docs
           .map((doc) => doc.data())
           .map(Pokemon.fromJson)
-          .toList());
+          .toList(),);
 
   Future<List<Pokemon>> fetchPokemons() async {
     final pokemons = await _pokemonsRef.orderBy('name').limit(10).get();
@@ -27,7 +27,7 @@ class PokemonFireStoreApi {
 
   Future<void> addPokemons(List<Pokemon> pokemons) async {
     final batch = pokeFireStore.batch();
-    for (var pokemon in pokemons) {
+    for (final pokemon in pokemons) {
       batch.set(
         _pokemonsRef.doc(pokemon.id.toString()),
         pokemon.toJson(),
@@ -49,7 +49,7 @@ class PokemonFireStoreApi {
   Future<void> deleteAllPokemons() async {
     final batch = pokeFireStore.batch();
     final pokemons = await _pokemonsRef.get();
-    for (var pokemon in pokemons.docs) {
+    for (final pokemon in pokemons.docs) {
       batch.delete(pokemon.reference);
     }
     await batch.commit();

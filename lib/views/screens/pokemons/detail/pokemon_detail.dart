@@ -22,22 +22,22 @@ class PokemonDetail extends StatelessWidget {
                 ),
                 Expanded(
                   child: Hero(
-                    tag: "pokemon:${_pokemon.id}",
+                    tag: 'pokemon:${_pokemon.id}',
                     child: CachedNetworkImage(imageUrl: _pokemon.imageUrl),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Row(
                     children: [
                       Wrap(
                         children: _pokemon.types
-                            .map((type) => PokeTypeWidget(type))
+                            .map(PokeTypeWidget.new)
                             .toList(growable: false),
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           );

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_await_in_return
+
 import 'package:flutter/material.dart';
 
 class _PokeConfirmDialog extends StatelessWidget {

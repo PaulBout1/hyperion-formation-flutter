@@ -8,7 +8,6 @@ class PokeTheme {
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: Colors.red,
       accentColor: Colors.blueAccent.shade700,
-      brightness: Brightness.light,
       backgroundColor: Colors.lightBlue.shade50,
     ),
     textTheme: TextTheme(

@@ -10,8 +10,8 @@ part '_pokemon_list_grid.dart';
 class PokemonList extends StatefulWidget {
   final List<Pokemon>? _pokemons;
   final Pokemon? selectedPokemon;
-  final Function(Pokemon pokemon) onTap;
-  final Function(Pokemon pokemon) onDelete;
+  final void Function(Pokemon pokemon) onTap;
+  final void Function(Pokemon pokemon) onDelete;
 
   const PokemonList(
     this._pokemons, {
@@ -67,7 +67,8 @@ class _PokemonListState extends State<PokemonList>
                 ),
               ),
               Text(
-                  context.intl.pokemonListFooter(widget._pokemons?.length ?? 0))
+                context.intl.pokemonListFooter(widget._pokemons?.length ?? 0),
+              ),
             ],
           );
   }

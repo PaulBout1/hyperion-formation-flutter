@@ -1,14 +1,18 @@
+import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/models/pokemon_type.dart';
+import 'package:pokemon/repository/api/poke_api.dart';
 import 'package:pokemon/repository/api/pokemon_firestore_api.dart';
 import 'package:pokemon/utils/extension/iterable_extension.dart';
 
-import '../models/pokemon.dart';
-
-import 'api/poke_api.dart';
-
 class PokeRepository {
-  final _pokeApi = const PokeApi();
-  final _pokeFireStore = PokemonFireStoreApi();
+  late final PokeApi _pokeApi;
+  late final PokemonFireStoreApi _pokeFireStore;
+
+  PokeRepository({
+    required PokeApi api,
+    required PokemonFireStoreApi fireStore,
+  })  : _pokeApi = api,
+        _pokeFireStore = fireStore;
 
   List<Pokemon>? _pokemons;
 

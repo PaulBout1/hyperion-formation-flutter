@@ -3,6 +3,9 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/firebase_options.dart';
+import 'package:pokemon/repository/api/poke_api.dart';
+import 'package:pokemon/repository/api/pokemon_firestore_api.dart';
+import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/views/poke_app.dart';
 
 void main() async {
@@ -17,9 +20,15 @@ void main() async {
     return true;
   };
 
-  runApp(const PokeApp());
+  final pokeRepo = PokeRepository(
+    api: PokeApi(),
+    fireStore: PokemonFireStoreApi(),
+  );
+
+  runApp(PokeApp(repository: pokeRepo));
 }
 
+// ignore: lines_longer_than_80_chars
 /// flutter create --empty --org=fr.formation --platforms=android,web --project-name pokemon .
 ///
 /// default folders
@@ -70,5 +79,7 @@ void main() async {
 /// Firebase
 ///  * https://firebase.flutter.dev/docs/firestore/usage
 ///  * https://cloud.google.com/firestore/docs/query-data/queries?hl=fr#dart
-/// Bloc 
 /// GetIt
+/// Bloc 
+/// https://bloclibrary.dev/#/gettingstarted
+///

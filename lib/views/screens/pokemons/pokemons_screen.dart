@@ -12,17 +12,19 @@ import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
 class PokemonsScreen extends StatelessWidget {
   const PokemonsScreen({super.key});
 
-  _editPokemon(BuildContext context, [Pokemon? pokemon]) async {
+  Future<void> _editPokemon(BuildContext context, [Pokemon? pokemon]) async {
     // GoRouter.of(context).go('/edit', extra: pokemon);
 
     // PokemonEditScreenResult? screenResult =
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => PokemonEditScreen(context.read<PokeRepository>(),
-            initialPokemon: pokemon),
+        builder: (_) => PokemonEditScreen(
+          context.read<PokeRepository>(),
+          initialPokemon: pokemon,
+        ),
       ),
     );
-    // todo snackbar
+    // TODO(paul): snackbar
   }
 
   //   late String message;
@@ -89,73 +91,79 @@ class PokemonsScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => PokemonsBloc(repo: context.read<PokeRepository>())
         ..add(PokemonsStreamRequested()),
-      child: Builder(builder: (context) {
-        return SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              leading: const Icon(Icons.home),
-              title: Text(context.intl.appName),
-              actions: [
-                IconButton(
-                  onPressed: () => throw Exception('PokeCrash'),
-                  icon: const Icon(Icons.bug_report),
-                ),
-                IconButton(
-                  onPressed: () {}, //=> _deletePokemonList(context),
-                  icon: const Icon(Icons.clear_all),
-                ),
-                IconButton(
-                  onPressed: () {}, //=> _generatePokemonList(context),
-                  icon: const Icon(Icons.upload),
-                ),
-                IconButton(
-                  onPressed: () => _editPokemon(context),
-                  icon: const Icon(Icons.add),
-                ),
-              ],
-            ),
-            body: Row(children: [
-              Flexible(
-                flex: 1,
-                child: BlocBuilder<PokemonsBloc, PokemonsState>(
-                  builder: (context, state) {
-                    return PokemonList(
-                      state.pokemons,
-                      selectedPokemon: state.selectedPokemon,
-                      onTap: (pokemon) => context
-                          .read<PokemonsBloc>()
-                          .add(PokemonsSelected(pokemon)),
-                      onDelete: (pokemon) => context
-                          .read<PokemonsBloc>()
-                          .add(PokemonsDeleted(pokemon)),
-                    );
-                  },
-                ),
-              ),
-              const VerticalDivider(
-                color: Colors.grey,
-                width: 4,
-                thickness: 1,
-              ),
-              Flexible(
-                flex: 2,
-                child: Builder(
-                  builder: (context) => PokemonDetail(
-                    context.select(
-                        (PokemonsBloc bloc) => bloc.state.selectedPokemon),
+      child: Builder(
+        builder: (context) {
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                leading: const Icon(Icons.home),
+                title: Text(context.intl.appName),
+                actions: [
+                  IconButton(
+                    onPressed: () => throw Exception('PokeCrash'),
+                    icon: const Icon(Icons.bug_report),
                   ),
+                  IconButton(
+                    onPressed: () {}, //=> _deletePokemonList(context),
+                    icon: const Icon(Icons.clear_all),
+                  ),
+                  IconButton(
+                    onPressed: () {}, //=> _generatePokemonList(context),
+                    icon: const Icon(Icons.upload),
+                  ),
+                  IconButton(
+                    onPressed: () => _editPokemon(context),
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+              body: Row(
+                children: [
+                  Flexible(
+                    child: BlocBuilder<PokemonsBloc, PokemonsState>(
+                      builder: (context, state) {
+                        return PokemonList(
+                          state.pokemons,
+                          selectedPokemon: state.selectedPokemon,
+                          onTap: (pokemon) => context
+                              .read<PokemonsBloc>()
+                              .add(PokemonsSelected(pokemon)),
+                          onDelete: (pokemon) => context
+                              .read<PokemonsBloc>()
+                              .add(PokemonsDeleted(pokemon)),
+                        );
+                      },
+                    ),
+                  ),
+                  const VerticalDivider(
+                    color: Colors.grey,
+                    width: 4,
+                    thickness: 1,
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Builder(
+                      builder: (context) => PokemonDetail(
+                        context.select(
+                          (PokemonsBloc bloc) => bloc.state.selectedPokemon,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: () => _editPokemon(
+                  context,
+                  context.read<PokemonsBloc>().state.selectedPokemon,
                 ),
-              )
-            ]),
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => _editPokemon(
-                  context, context.read<PokemonsBloc>().state.selectedPokemon),
-              label: const Text('Edit'),
-              icon: const Icon(Icons.edit),
+                label: const Text('Edit'),
+                icon: const Icon(Icons.edit),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

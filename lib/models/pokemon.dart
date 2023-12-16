@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'pokemon_type.dart';
+import 'package:pokemon/models/pokemon_type.dart';
 
 part 'pokemon.g.dart';
 
@@ -47,6 +47,6 @@ class Pokemon {
 extension PokemonsExtension on List<Pokemon> {
   void sortByName() {
     return sort((first, second) =>
-        first.name.toLowerCase().compareTo(second.name.toLowerCase()));
+        first.name.toLowerCase().compareTo(second.name.toLowerCase()),);
   }
 }

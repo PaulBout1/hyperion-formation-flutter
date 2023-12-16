@@ -3,8 +3,8 @@ part of 'pokemon_list.dart';
 class _ListView extends StatelessWidget {
   final List<Pokemon> _pokemons;
   final Pokemon? selectedPokemon;
-  final Function(Pokemon pokemon) onTap;
-  final Function(Pokemon pokemon) onDelete;
+  final void Function(Pokemon pokemon) onTap;
+  final void Function(Pokemon pokemon) onDelete;
 
   const _ListView(
     this._pokemons, {
@@ -46,8 +46,8 @@ class _ListView extends StatelessWidget {
 
 class _GridView extends StatelessWidget {
   final List<Pokemon> _pokemons;
-  final Function(Pokemon pokemon) onTap;
-  final Function(Pokemon pokemon) onDelete;
+  final void Function(Pokemon pokemon) onTap;
+  final void Function(Pokemon pokemon) onDelete;
 
   const _GridView(
     this._pokemons, {
@@ -62,7 +62,6 @@ class _GridView extends StatelessWidget {
         itemCount: _pokemons.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
-          childAspectRatio: 1,
         ),
         itemBuilder: (context, index) => PokeDismissible(
           key: ValueKey('grid-${_pokemons[index].id}'),

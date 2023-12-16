@@ -1,17 +1,19 @@
 import 'package:dio/dio.dart';
 
-import '../../models/pokemon.dart';
+import 'package:pokemon/models/pokemon.dart';
 
 class PokeApi {
-  const PokeApi();
+  late final Dio _dio;
 
-  Future<List<Pokemon>> fetchPokemons({int chunkSize = 1000}) async {
-    final response = await Dio()
-        .get<List>('https://pokebuildapi.fr/api/v1/pokemon/limit/$chunkSize');
+  PokeApi([Dio? dio]) : _dio = dio ?? Dio();
+
+  Future<List<Pokemon>> fetchPokemons({int chunkSize = 20}) async {
+    final response = await _dio.get<List<dynamic>>(
+        'https://pokebuildapi.fr/api/v1/pokemon/limit/$chunkSize',);
     if (response.statusCode == 200) {
       final pokemons = response.data
           ?.cast<Map<String, dynamic>>()
-          .map((json) => Pokemon.fromJson(json))
+          .map(Pokemon.fromJson)
           .toList()
         ?..sort((a, b) => a.name.compareTo(b.name));
       return pokemons ?? [];

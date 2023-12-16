@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class PokeDismissible extends StatelessWidget {
   final Widget child;
-  final Function() onDelete;
+  final void Function() onDelete;
 
   const PokeDismissible({
-    super.key,
     required this.onDelete,
     required this.child,
+    super.key,
   });
 
   @override
@@ -16,12 +16,12 @@ class PokeDismissible extends StatelessWidget {
       key: UniqueKey(),
       onDismissed: (direction) => onDelete(),
       direction: DismissDirection.startToEnd,
-      background: Container(
+      background: const ColoredBox(
         color: Colors.red,
-        child: const Align(
+        child: Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.only(left: 8.0),
+            padding: EdgeInsets.only(left: 8),
             child: Icon(Icons.delete, color: Colors.white),
           ),
         ),

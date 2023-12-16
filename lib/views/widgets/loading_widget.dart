@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatefulWidget {
   const LoadingWidget({super.key});
@@ -17,7 +18,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
     _controller = AnimationController(
         vsync: this,
         duration: const Duration(seconds: 2),
-        animationBehavior: AnimationBehavior.preserve)
+        animationBehavior: AnimationBehavior.preserve,)
       ..repeat();
     super.initState();
   }

@@ -44,7 +44,7 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
     super.initState();
   }
 
-  _onTypeChanged(PokemonType type, bool selected) {
+  void _onTypeChanged(PokemonType type, bool selected) {
     if (selected) {
       _pokemon.types.add(type);
     } else {
@@ -53,11 +53,11 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
     setState(() {});
   }
 
-  _onCancel() {
+  void _onCancel() {
     Navigator.of(context).pop(PokemonEditScreenResult.canceled);
   }
 
-  _onSave() async {
+  Future<void> _onSave() async {
     if (_pokemon.id == 0) {
       await widget._repo.addPokemon(_pokemon);
       if (mounted) Navigator.of(context).pop(PokemonEditScreenResult.added);
@@ -76,7 +76,7 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
           children: [
             Flexible(
               child: Hero(
-                tag: "pokemon:${_pokemon.id}",
+                tag: 'pokemon:${_pokemon.id}',
                 child: CachedNetworkImage(imageUrl: _pokemon.imageUrl),
               ),
             ),
@@ -86,7 +86,7 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
               child: Center(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(100.0),
+                    padding: const EdgeInsets.all(100),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -117,8 +117,10 @@ class _PokemonEditScreenState extends State<PokemonEditScreen> {
                                       (type) => PokemonTypeChip(
                                         type,
                                         initialValue: _pokemon.types
-                                            .where((element) =>
-                                                element.isEqual(type))
+                                            .where(
+                                              (element) =>
+                                                  element.isEqual(type),
+                                            )
                                             .isNotEmpty,
                                         onChanged: (value) =>
                                             _onTypeChanged(type, value),
