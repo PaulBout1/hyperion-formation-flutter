@@ -7,8 +7,8 @@ import '../../../../test_ressources/app_test_widget.dart';
 
 // https://medium.com/flutter-community/assertions-in-dart-and-flutter-tests-an-ultimate-cheat-sheet-f6d91510fe6b
 
-  void main() {
-  final feu = PokemonType(
+void main() {
+  const feu = PokemonType(
     name: 'feu',
     imageUrl:
         'https://img.freepik.com/vecteurs-libre/logo-feu-orange_78370-543.jpg',

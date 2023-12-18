@@ -47,10 +47,10 @@ class PokeRepository {
   }
 
   Future<void> addPokemon(Pokemon pokemon) async {
-    await _pokeFireStore.addPokemon(pokemon);
-    pokemon.id = (_pokemons?.length ?? 0) + 1;
+    final newPokemon = pokemon.copyWith(id: (_pokemons?.length ?? 0) + 1);
+    await _pokeFireStore.addPokemon(newPokemon);
     _pokemons
-      ?..add(pokemon)
+      ?..add(newPokemon)
       ..sortByName();
   }
 

@@ -2,10 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon/firebase_options.dart';
 import 'package:pokemon/repository/api/poke_api.dart';
 import 'package:pokemon/repository/api/pokemon_firestore_api.dart';
 import 'package:pokemon/repository/poke_repository.dart';
+import 'package:pokemon/utils/poke_bloc_observer.dart';
 import 'package:pokemon/views/poke_app.dart';
 
 void main() async {
@@ -19,6 +21,8 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
+  Bloc.observer = PokeBlocObserver();
 
   final pokeRepo = PokeRepository(
     api: PokeApi(),

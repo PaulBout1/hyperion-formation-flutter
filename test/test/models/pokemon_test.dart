@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/api/poke_api.dart';
-import 'package:pokemon/views/screens/pokemons/pokemons_bloc.dart';
+import 'package:pokemon/views/screens/pokemons/pokemons_screen_state.dart';
 
 import '../../test_ressources/fakes/fake_poke_repository.dart';
 
@@ -56,9 +56,9 @@ void main() {
 
   group('Equatable in a Set must be uniq', () {
     test('double equatable model in a set is managed', () {
-      final aSet = <PokemonsState>{}
-        ..add(const PokemonsState())
-        ..add(const PokemonsState());
+      final aSet = <PokemonsScreenState>{}
+        ..add(const PokemonsScreenState())
+        ..add(const PokemonsScreenState());
       expect(aSet.length, 1);
     });
 

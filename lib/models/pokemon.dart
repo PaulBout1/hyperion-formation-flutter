@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:pokemon/models/pokemon_type.dart';
@@ -5,18 +6,18 @@ import 'package:pokemon/models/pokemon_type.dart';
 part 'pokemon.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Pokemon {
-  int id;
+class Pokemon extends Equatable {
+  final int id;
 
-  String name;
+  final String name;
 
   @JsonKey(name: 'image')
-  String imageUrl;
+  final String imageUrl;
 
   @JsonKey(name: 'apiTypes')
   final List<PokemonType> types;
 
-  Pokemon({
+  const Pokemon({
     required this.name,
     required this.id,
     required this.imageUrl,
@@ -25,7 +26,7 @@ class Pokemon {
 
   bool isValid() => name.isNotEmpty && imageUrl.isNotEmpty && types.isNotEmpty;
 
-  factory Pokemon.empty() => Pokemon(
+  factory Pokemon.empty() => const Pokemon(
         name: '',
         id: 0,
         imageUrl:
@@ -40,13 +41,32 @@ class Pokemon {
 
   @override
   String toString() {
-    return '${name.padRight(15)} | [${types.map((t) => t.name).join(',')}]';
+    return name;
+  }
+
+  @override
+  List<Object?> get props => [id, name, imageUrl, types];
+
+  Pokemon copyWith({
+    int? id,
+    String? name,
+    String? imageUrl,
+    List<PokemonType>? types,
+  }) {
+    return Pokemon(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      imageUrl: imageUrl ?? this.imageUrl,
+      types: types ?? this.types,
+    );
   }
 }
 
 extension PokemonsExtension on List<Pokemon> {
   void sortByName() {
-    return sort((first, second) =>
-        first.name.toLowerCase().compareTo(second.name.toLowerCase()),);
+    return sort(
+      (first, second) =>
+          first.name.toLowerCase().compareTo(second.name.toLowerCase()),
+    );
   }
 }
