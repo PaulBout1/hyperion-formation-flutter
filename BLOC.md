@@ -2,7 +2,7 @@
 
 ## Définition d'un bloc ou d'un cubit
 
-### 1 - Bloc or Cubit state
+### 1 - State
 
 * Contient des objets affichés dans des `Widgets`
 * Extends `Equatable`
