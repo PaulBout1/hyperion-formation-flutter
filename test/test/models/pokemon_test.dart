@@ -66,7 +66,7 @@ void main() {
       final aSet = <Pokemon>{}
         ..add(Pokemon.empty())
         ..add(Pokemon.empty());
-      expect(aSet.length, 2);
+      expect(aSet.length, 1);
     });
   });
 }

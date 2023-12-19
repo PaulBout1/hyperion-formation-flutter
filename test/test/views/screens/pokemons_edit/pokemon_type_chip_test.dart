@@ -18,7 +18,11 @@ void main() {
     /// Build our app and trigger a frame.
     await tester.pumpWidget(
       AppTest(
-        child: PokemonTypeChip(feu, initialValue: true, onChanged: (_) {}),
+        child: PokemonTypeChip(
+          feu,
+          initialValue: true,
+          onChanged: (_) {},
+        ),
       ),
     );
 

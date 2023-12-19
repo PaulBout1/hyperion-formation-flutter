@@ -7,9 +7,10 @@ class PokeApi {
 
   PokeApi([Dio? dio]) : _dio = dio ?? Dio();
 
-  Future<List<Pokemon>> fetchPokemons({int chunkSize = 20}) async {
+  Future<List<Pokemon>> fetchPokemons({int chunkSize = 100}) async {
     final response = await _dio.get<List<dynamic>>(
-        'https://pokebuildapi.fr/api/v1/pokemon/limit/$chunkSize',);
+      'https://pokebuildapi.fr/api/v1/pokemon/limit/$chunkSize',
+    );
     if (response.statusCode == 200) {
       final pokemons = response.data
           ?.cast<Map<String, dynamic>>()

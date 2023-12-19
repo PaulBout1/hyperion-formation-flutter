@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/utils/extension/context_extension.dart';
+import 'package:pokemon/views/poke_theme.dart';
 import 'package:pokemon/views/screens/pokemons/detail/pokemon_detail.dart';
 import 'package:pokemon/views/screens/pokemons/list/pokemon_list.dart';
 import 'package:pokemon/views/screens/pokemons/pokemons_screen_bloc.dart';
@@ -83,6 +84,14 @@ class PokemonsScreen extends StatelessWidget {
                 leading: const Icon(Icons.home),
                 title: Text(context.intl.appName),
                 actions: [
+                  Builder(
+                    builder: (context) => IconButton(
+                      onPressed: context.read<PokeThemeCubit>().switchTheme,
+                      icon: context.watch<PokeThemeCubit>().state.isDark
+                          ? const Icon(Icons.light_mode)
+                          : const Icon(Icons.dark_mode),
+                    ),
+                  ),
                   IconButton(
                     onPressed: () => throw Exception('PokeCrash'),
                     icon: const Icon(Icons.bug_report),

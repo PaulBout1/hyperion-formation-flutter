@@ -3,18 +3,19 @@ import 'package:pokemon/models/pokemon.dart';
 
 final pokeFireStore = FirebaseFirestore.instance;
 
+const _limit = 80;
+
 class PokemonFireStoreApi {
-  Stream<List<Pokemon>> fetchPokemonsStream() => _pokemonsRef
-      .orderBy('name')
-      .limit(10)
-      .snapshots()
-      .map((snapshot) => snapshot.docs
-          .map((doc) => doc.data())
-          .map(Pokemon.fromJson)
-          .toList(),);
+  Stream<List<Pokemon>> fetchPokemonsStream() =>
+      _pokemonsRef.orderBy('name').limit(_limit).snapshots().map(
+            (snapshot) => snapshot.docs
+                .map((doc) => doc.data())
+                .map(Pokemon.fromJson)
+                .toList(),
+          );
 
   Future<List<Pokemon>> fetchPokemons() async {
-    final pokemons = await _pokemonsRef.orderBy('name').limit(10).get();
+    final pokemons = await _pokemonsRef.orderBy('name').limit(_limit).get();
     return pokemons.docs
         .map((doc) => doc.data())
         .map(Pokemon.fromJson)

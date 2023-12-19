@@ -15,19 +15,26 @@ class PokeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => repository,
-      child: MaterialApp.router(
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('fr'),
-        ],
-        theme: PokeTheme.themeLight,
-        routerConfig: pokeRoutes,
+      child: BlocProvider(
+        create: (context) => PokeThemeCubit(),
+        child: Builder(
+          builder: (context) {
+            return MaterialApp.router(
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en'),
+                Locale('fr'),
+              ],
+              theme: context.watch<PokeThemeCubit>().state,
+              routerConfig: pokeRoutes,
+            );
+          },
+        ),
       ),
     );
   }
