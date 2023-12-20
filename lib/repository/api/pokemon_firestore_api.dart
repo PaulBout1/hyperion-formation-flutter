@@ -57,5 +57,5 @@ class PokemonFireStoreApi {
   }
 
   CollectionReference<Map<String, dynamic>> get _pokemonsRef =>
-      pokeFireStore.collection('pokemon');
+      pokeFireStore.collection('pokemons');
 }

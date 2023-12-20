@@ -8,6 +8,23 @@ class PokeThemeCubit extends Cubit<ThemeData> {
   void switchTheme() => emit(
         state.isDark ? PokeTheme.themeLight : PokeTheme.themeDark,
       );
+
+  void setPrimaryColor(Color color) => emit(
+        state.copyWith(
+          colorScheme: state.colorScheme.copyWith(
+            primary: color,
+          ),
+          textTheme: state.textTheme.copyWith(
+            displayLarge: state.textTheme.displayLarge?.copyWith(
+              color: color,
+            ),
+          ),
+          listTileTheme: state.listTileTheme.copyWith(
+            selectedColor: color,
+            iconColor: color,
+          ),
+        ),
+      );
 }
 
 extension ThemeDataExt on ThemeData {

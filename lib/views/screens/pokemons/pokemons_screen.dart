@@ -10,6 +10,7 @@ import 'package:pokemon/views/screens/pokemons/pokemons_screen_bloc.dart';
 import 'package:pokemon/views/screens/pokemons/pokemons_screen_event.dart';
 import 'package:pokemon/views/screens/pokemons/pokemons_screen_state.dart';
 import 'package:pokemon/views/screens/pokemons_edit/pokemon_edit_screen.dart';
+import 'package:pokemon/views/widgets/color_picker_dialog.dart';
 import 'package:pokemon/views/widgets/confirm_dialog.dart';
 
 class PokemonsScreen extends StatelessWidget {
@@ -70,6 +71,13 @@ class PokemonsScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _changeColor(BuildContext context) async {
+    final dialogResult = await showPokeColorPicker(context: context);
+    if (dialogResult != null && context.mounted) {
+      context.read<PokeThemeCubit>().setPrimaryColor(dialogResult);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -84,6 +92,12 @@ class PokemonsScreen extends StatelessWidget {
                 leading: const Icon(Icons.home),
                 title: Text(context.intl.appName),
                 actions: [
+                  Builder(
+                    builder: (context) => IconButton(
+                      onPressed: () => _changeColor(context),
+                      icon: const Icon(Icons.color_lens),
+                    ),
+                  ),
                   Builder(
                     builder: (context) => IconButton(
                       onPressed: context.read<PokeThemeCubit>().switchTheme,
